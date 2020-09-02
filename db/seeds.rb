@@ -7,6 +7,14 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # ID3 tag music genres are surprisingly specific.
+Genre.destroy_all
+Genre.reset_pk_sequence
+Song.destroy_all
+Song.reset_pk_sequence
+Note.destroy_all
+Note.reset_pk_sequence
+Artist.destroy_all
+Artist.reset_pk_sequence
 
 genres = Hash[[
   "Blues",
@@ -159,4 +167,37 @@ genres = Hash[[
   "Synthpop"
 ].map { |genre| [genre, Genre.find_or_create_by(name: genre)] }]
 
+# artist --< song >-- genre
+#             |
+#             |
+#             ^
+#            note
 
+artist_1 = Artist.create(name: Faker::Name.name)
+artist_2 = Artist.create(name: Faker::Name.name)
+artist_3 = Artist.create(name: Faker::Name.name)
+artist_4 = Artist.create(name: Faker::Name.name)
+artist_5 = Artist.create(name: Faker::Name.name)
+artist_6 = Artist.create(name: Faker::Name.name)
+
+song_1 = Song.create(title: Faker::Restaurant.name, artist:artist_2, genre: Genre.all[0])
+song_2 = Song.create(title: Faker::Restaurant.name, artist:artist_1, genre: Genre.all[2])
+song_3 = Song.create(title: Faker::Restaurant.name, artist:artist_2, genre: Genre.all[2])
+song_4 = Song.create(title: Faker::Restaurant.name, artist:artist_3, genre: Genre.all[3])
+song_5 = Song.create(title: Faker::Restaurant.name, artist:artist_1, genre: Genre.all[4])
+song_6 = Song.create(title: Faker::Restaurant.name, artist:artist_2, genre: Genre.all[0])
+song_7 = Song.create(title: Faker::Restaurant.name, artist:artist_4, genre: Genre.all[6])
+song_8 = Song.create(title: Faker::Restaurant.name, artist:artist_5, genre: Genre.all[0])
+song_9 = Song.create(title: Faker::Restaurant.name, artist:artist_6, genre: Genre.all[2])
+
+note_1 = Note.create(content:Faker::Quote.famous_last_words, song:song_1)
+note_2 = Note.create(content:Faker::Quote.famous_last_words, song:song_2)
+note_3 = Note.create(content:Faker::Quote.famous_last_words, song:song_3)
+note_4 = Note.create(content:Faker::Quote.famous_last_words, song:song_4)
+note_5 = Note.create(content:Faker::Quote.famous_last_words, song:song_1)
+note_6 = Note.create(content:Faker::Quote.famous_last_words, song:song_2)
+note_7 = Note.create(content:Faker::Quote.famous_last_words, song:song_1)
+
+
+
+puts "😘"
